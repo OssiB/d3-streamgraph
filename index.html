@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Interactive Data Visualization with D3.js - Streamgraph</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/grid.css">
+	<link rel="stylesheet" type="text/css" href="css/rSlider.min.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+	<div class="container">
+		<h1>So white, an evolution</h1>
+		<div class="subtitle">A look at the representation of ethnic diversity throughout the history of the Academy Awards.</div>
+		<div class="intro">
+			<p>In 2014 and 2015, all of the academy awards acting nominations went to white actors, inspiring April Reign to create the hashtag #OscarsSoWhite. Since then, did the old establishment evolve? And how were minority groups represented throughout the history of the Academy Awards?</p>
+			<p>With this visualization, let's look at the number of Black, Hispanic and Asian nominees from the first ceremony in 1928 until 2021. We will focus on some of the most prestigious awards: Best Actor in Leading Role, Best Actress in Leading Role, Best Actor in Supporting Role, Best Actress in Supporting Role, Best Director, Best Picture and Best Writing (Original and Adapted Screenplay).</p>
+		</div>
+
+		<div class="filters hidden">
+			<div class="row">
+				<div class="col-4">
+					<div class="filter filter-award">
+						<label for="selectAward">Select an award</label>
+						<select name="selectAward" id="selectAward"></select>
+					</div>
+				</div>
+				<div class="col-8">
+					<div class="filter filter-years">
+						<label for="yearsSlider">Select a year range</label>
+						<div class="slider-wrapper">
+							<div class="slider">
+								<input type="text" id="yearsSlider" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="viz"></div>
+		<div class="legend"></div>
+
+		<div class="sources">
+			<div class="sources-label">Sources</div>
+			<ul>
+				<li><a href="https://en.wikipedia.org/wiki/List_of_black_Academy_Award_winners_and_nominees">List of black Academy Award winners and nominees</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/List_of_Asian_Academy_Award_winners_and_nominees">List of Asian Academy Award winners and nominees</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/List_of_Hispanic_Academy_Award_winners_and_nominees">List of Hispanic Academy Award winners and nominees</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/Academy_Award_for_Best_Actor">Academy Award for Best Actor</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/Academy_Award_for_Best_Actress">Academy Award for Best Actress</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/Academy_Award_for_Best_Supporting_Actor">Academy Award for Best Supporting Actor</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/Academy_Award_for_Best_Supporting_Actress">Academy Award for Best Supporting Actress</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/Academy_Award_for_Best_Picture">Academy Award for Best Picture</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/Academy_Award_for_Best_Director">Academy Award for Best Director</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/Academy_Award_for_Best_Original_Screenplay">Academy Award for Best Original Screenplay</a>, Wikipedia</li>
+				<li><a href="https://en.wikipedia.org/wiki/Academy_Award_for_Best_Adapted_Screenplay">Academy Award for Best Adapted Screenplay</a>, Wikipedia</li>
+			</ul>
+		</div>
+	</div>
+	
+
+	<!-- Add Scripts Here -->
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script src="js/rSlider.min.js"></script>
+	<script src="https://d3js.org/d3-collection.v1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/d3-color@3"></script>
+   <script src="https://cdn.jsdelivr.net/npm/d3-interpolate@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-scale-chromatic@3"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
