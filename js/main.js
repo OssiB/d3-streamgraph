@@ -2,7 +2,7 @@ const margin = { top: 100, right: 20, bottom: 50, left: 50 };
 const width = 1160;
 const height = 600;
 const groups = [
-  { key: 'nominees_caucasian', label: 'Caucasian or anotheri', color: '#BFD3C1' },
+  { key: 'nominees_caucasian', label: 'Caucasian or another', color: '#BFD3C1' },
   { key: 'nominees_afrodescendant', label: 'Afro-descendant', color: '#68A691' },
   { key: 'nominees_hispanic', label: 'Hispanic', color: '#EFC7C2' },
   { key: 'nominees_asian', label: 'Asian', color: '#694F5D' },
@@ -86,7 +86,7 @@ const createViz = (dataFormatted) => {
     .attr('width', width)
     .attr('height', height);
 
-  console.log(series)
+
   const nomineesPaths = svg
     .append('g')
     .attr('class', 'stream-paths')
@@ -112,16 +112,81 @@ const createViz = (dataFormatted) => {
     .attr('class', 'legend-label')
     .text(d => d.label);
   svg.append("g")
-    .attr("transform", `translate(${margin.left}, ${height - margin.bottom})`)
+    .attr("transform", `translate(0, ${height - margin.bottom})`)
     .call(xAxis)
   svg.append("g")
     .attr("transform", `translate(${margin.left},0)`)
     .call(yAxis)
   svg.append("text")
-    .attr("x", margin.left-150)
-    .attr("y", margin.top -80)
+    .attr("x", margin.left - 150)
+    .attr("y", margin.top - 80)
     .attr("fill", "currentColor")
     .attr("transform", "rotate(-90)")
     .attr("text-anchor", "end")
     .text("Number of nominees")
+
+  const tooltip = svg.append("g")
+    .attr("class", "tooltip-group")
+    .attr("transform", `translate(${margin.left},0)`)
+    .style("font-size", "14px");
+
+  const tooltipYear = tooltip.append("text")
+    .attr("x", 0)
+    .attr("y", height - margin.bottom + 35)
+    .style("font-size", "17px")
+    .style("font-weight", 700)
+    .attr("text-anchor", "middle")
+
+  const tooltipLine = tooltip.append("line")
+    .attr("x1", 0)
+    .attr("x2", 0)
+    .attr("y1", height - margin.bottom)
+    .attr("y2", 0)
+    .attr("stroke", "#453430")
+    .attr("stroke-dasharray", "6 4");
+
+  // const tooltipCeremonyTotal = tooltip
+  //   .append("text")
+  //   .attr("class", "ceremony-breakdown-total")
+  //   .attr("x", 10)
+  //   .attr("y", 10)
+
+  const tooltipCeremonyBreakdown = tooltip
+    .append("text")
+    .attr("class", "ceremony-breakdown-total")
+    .attr("x", 10)
+    .attr("y", 10)
+    .style("font-weight", 700)
+
+  tooltip
+    .append("text")
+    .attr("class","ceremony-breakdown-nominees")
+    .style("font-weight", 700)
+    .selectAll("tspan")
+    .data(groups)
+    .join('tspan')
+    .attr('class', d => `ceremony-breakdown-${d.key}`)
+    .attr('x', 10)
+    .attr('dy', 30)
+
+  nomineesPaths.on('mousemove', event => {
+    tooltip.attr("transform", `translate(${event.offsetX},0)`);
+    const year = Math.round(xScale.invert(event.offsetX))
+    const yearlyData = dataFormatted.find(ceremony => ceremony.year == year);
+    tooltipYear.text(year);
+
+    const move = (year > 1970) ? -170 : 0
+
+    d3.select('.ceremony-breakdown-total')
+       .attr("transform", `translate(${move},0)`)
+       .text(`Nominees total ${yearlyData.nominees_total}`)
+    tooltipCeremonyBreakdown.text(`Nominees total ${yearlyData['nominees_total']}`)
+    d3.select('.ceremony-breakdown-nominees')
+       .attr("transform", `translate(${move},0)`);
+    groups.forEach(group =>
+      d3.select(`.ceremony-breakdown-${group.key}`)
+        .text(`${ group.label} ${yearlyData[group.key]}`))
+        
+  });
+
 };
